@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>医疗知识库 - 医心陪诊</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        /* 继承基础样式 */
+        .knowledge-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        /* 搜索栏 */
+        .search-bar {
+            background: white;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        /* 医院卡片 */
+        .hospital-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .tag {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin: 0.5rem 0.5rem 0 0;
+        }
+
+        /* 护理知识板块 */
+        .tips-section {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .accordion {
+            border-bottom: 1px solid #eee;
+            padding: 1rem 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="knowledge-container">
+        <!-- 搜索栏 -->
+        <div class="search-bar">
+            <input type="text" placeholder="搜索医院/疾病/护理知识..."
+                   style="width: 100%; padding: 0.8rem; border: 2px solid #e3e9ef; border-radius: 8px;">
+        </div>
+
+        <!-- 医院导航 -->
+        <h2 style="color: var(--primary); margin-bottom: 1.5rem;">
+            <i class="fas fa-hospital"></i> 北京协和医院就诊指南
+        </h2>
+        <div class="hospital-card">
+            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
+                <img src="hospital-thumb.jpg" alt="医院外观"
+                     style="width: 120px; height: 90px; border-radius: 8px; object-fit: cover;">
+                <div>
+                    <h3>特色科室</h3>
+                    <div>
+                        <span class="tag">内分泌科</span>
+                        <span class="tag">心血管科</span>
+                        <span class="tag">肿瘤中心</span>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h4>就诊流程</h4>
+                <ol style="color: var(--text); line-height: 2;">
+                    <li>预约挂号（支持APP/电话/现场）</li>
+                    <li>门诊大楼取号（需携带身份证）</li>
+                    <li>候诊区等待叫号</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- 护理知识 -->
+        <div class="tips-section">
+            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">
+                <i class="fas fa-heartbeat"></i> 糖尿病护理指南
+            </h2>
+            <div class="accordion">
+                <div style="display: flex; justify-content: space-between; cursor: pointer;">
+                    <h4>日常饮食规范</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div style="display: none; padding-top: 1rem; color: var(--text);">
+                    <p>① 控制碳水化合物摄入量<br>
+                    ② 选择低GI食物（如燕麦、全麦面包）<br>
+                    ③ 每日分5-6餐进食</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 讨论区 -->
+        <div style="margin-top: 2rem; background: white; padding: 1.5rem; border-radius: 12px;">
+            <h3 style="color: var(--primary);">
+                <i class="fas fa-comments"></i> 经验交流区
+            </h3>
+            <div style="margin: 1rem 0;">
+                <textarea style="width: 100%; padding: 1rem; border: 2px solid #e3e9ef; border-radius: 8px;"
+                          placeholder="分享您的就医经验或提问..."></textarea>
+                <button style="background: var(--secondary); color: white; margin-top: 0.5rem; padding: 0.8rem 1.5rem; border: none; border-radius: 8px;">
+                    发布
+                </button>
+            </div>
+            <div class="comment">
+                <div style="display: flex; gap: 1rem; margin: 1rem 0;">
+                    <div style="width: 40px; height: 40px; background: #eee; border-radius: 50%;"></div>
+                    <div>
+                        <p style="font-weight: bold;">用户123：</p>
+                        <p>分享一个挂号技巧：早上7点APP放号最多！</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
