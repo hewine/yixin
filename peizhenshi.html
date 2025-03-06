@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>专业陪诊师登录</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, '微软雅黑', sans-serif;
+        }
+
+        body {
+            background: #f0f4f8;
+        }
+
+        /* 主容器 */
+        .professional-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* 专业侧边栏 */
+        .professional-sidebar {
+            flex: 0 0 450px;
+            background:
+                linear-gradient(135deg, rgba(16, 82, 140, 0.95) 0%, rgba(9, 60, 107, 0.95) 100%),
+                url('nurse-bg.jpg') center/cover;
+            padding: 3rem 2rem;
+            position: relative;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.15);
+        }
+
+        .badge-system {
+            position: absolute;
+            top: 2rem;
+            right: 2rem;
+            background: rgba(255,255,255,0.15);
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            color: #fff;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        /* 专业认证区 */
+        .certification-info {
+            margin-top: 4rem;
+            color: #fff;
+        }
+
+        .certification-header {
+            border-left: 4px solid #6bbdff;
+            padding-left: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .certification-header h2 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .certification-features {
+            list-style: none;
+        }
+
+        .certification-features li {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(255,255,255,0.08);
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .certification-features li:hover {
+            background: rgba(255,255,255,0.12);
+            transform: translateX(10px);
+        }
+
+        /* 登录表单区 */
+        .professional-login {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+
+        .pro-login-box {
+            width: 100%;
+            max-width: 500px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+            padding: 3rem;
+        }
+
+        .pro-login-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .pro-login-header img {
+            width: 80px;
+            margin-bottom: 1.5rem;
+        }
+
+        .pro-login-header h1 {
+            color: #1a4971;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* 专业输入组 */
+        .pro-input-group {
+            position: relative;
+            margin-bottom: 1.8rem;
+        }
+
+        .pro-input-icon {
+            position: absolute;
+            left: 1.2rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #7d98b3;
+            font-size: 1.1rem;
+        }
+
+        .pro-input {
+            width: 100%;
+            padding: 1rem 1rem 1rem 3.5rem;
+            border: 2px solid #e3e9ef;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            background: #f8fafc;
+        }
+
+        .pro-input:focus {
+            border-color: #6bbdff;
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(107, 189, 255, 0.2);
+        }
+
+        /* 验证码区域 */
+        .captcha-group {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .captcha-img {
+            flex: 1;
+            height: 50px;
+            background: #e3e9ef;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-style: italic;
+            color: #7d98b3;
+        }
+
+        /* 专业登录按钮 */
+        .pro-login-btn {
+            width: 100%;
+            padding: 1.2rem;
+            background: linear-gradient(135deg, #1a4971, #0f3557);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.8rem;
+        }
+
+        .pro-login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(26, 73, 113, 0.3);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .professional-container {
+                flex-direction: column;
+            }
+
+            .professional-sidebar {
+                flex: none;
+                min-height: 400px;
+                padding: 2rem;
+            }
+
+            .pro-login-box {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="professional-container">
+        <!-- 专业侧边栏 -->
+        <div class="professional-sidebar">
+            <!-- 认证徽章 -->
+            <div class="badge-system">
+                <i class="fas fa-shield-alt"></i>
+                <span>认证医疗系统 V2.0</span>
+            </div>
+
+            <!-- 认证信息 -->
+            <div class="certification-info">
+                <div class="certification-header">
+                    <h2>专业陪诊师认证</h2>
+                    <p>Healthcare Professional System</p>
+                </div>
+
+                <ul class="certification-features">
+                    <li>
+                        <i class="fas fa-id-card fa-lg"></i>
+                        <div>
+                            <h4>实名认证</h4>
+                            <p>卫健委备案医疗人员</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-lock fa-lg"></i>
+                        <div>
+                            <h4>数据加密</h4>
+                            <p>医疗信息三级加密传输</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-clock fa-lg"></i>
+                        <div>
+                            <h4>服务保障</h4>
+                            <p>24小时应急处置支持</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 登录表单区 -->
+        <div class="professional-login">
+            <div class="pro-login-box">
+                <div class="pro-login-header">
+                    <img src="./图标.png" alt="专业认证">
+                    <h1>陪诊师专业平台</h1>
+                    <p>Medical Companion Specialist System</p>
+                </div>
+
+                <form>
+                    <!-- 工号输入 -->
+                    <div class="pro-input-group">
+                        <i class="pro-input-icon fas fa-id-badge"></i>
+                        <input type="text" class="pro-input" placeholder="请输入工号/执业编号">
+                    </div>
+
+                    <!-- 密码输入 -->
+                    <div class="pro-input-group">
+                        <i class="pro-input-icon fas fa-fingerprint"></i>
+                        <input type="password" class="pro-input" placeholder="请输入安全密码">
+                    </div>
+
+                    <!-- 验证码 -->
+                    <div class="captcha-group">
+                        <div class="pro-input-group" style="flex:2">
+                            <i class="pro-input-icon fas fa-shield-alt"></i>
+                            <input type="text" class="pro-input" placeholder="请输入验证码">
+                        </div>
+                        <div class="captcha-img">6 W H A</div>
+                    </div>
+
+                    <button type="submit" class="pro-login-btn">
+                        <i class="fas fa-sign-in-alt"></i>
+                        安全登录系统
+                    </button>
+
+                    <!-- 辅助链接 -->
+                    <div style="margin-top:1.5rem; text-align:center;">
+                        <a href="#" style="color:#7d98b3; text-decoration:none; font-size:0.9rem;">
+                            <i class="fas fa-lock"></i> 忘记密码？联系系统管理员
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
