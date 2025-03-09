@@ -2,150 +2,345 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>定时用药提醒 - 医心陪诊</title>
+    <title>医心陪诊 - 专业用药管理系统</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* 基础样式 */
         :root {
-            --primary: #1a4971;
-            --secondary: #6bbdff;
-            --accent: #2ed573;
-            --bg: #f8fafc;
-            --text: #4a6572;
+            --primary: #1761a4;  /* 主蓝 */
+            --secondary: #1a73e8; /* 辅蓝 */
+            --accent: #e3f2fd;   /* 浅蓝 */
+            --text: #2d3748;     /* 深灰 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', '微软雅黑', sans-serif;
         }
 
         body {
-            background: var(--bg);
-            font-family: '微软雅黑', sans-serif;
-            padding: 1rem;
+            background: #f8fafc;
+            min-height: 100vh;
         }
 
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
+        /* 渐变蓝头部 */
+        .app-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 1.5rem 2rem;
+            color: white;
+            display: flex;
+            align-items: center;
+            box-shadow: 0 4px 20px rgba(23,97,164,0.2);
         }
 
-        /* 用药卡片 */
-        .medication-card {
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+        }
+
+        .logo {
+            height: 45px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+        }
+
+        /* 主容器 */
+        .main-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+        }
+
+        /* 模式选择 */
+        .mode-selector {
             background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 32px rgba(23,97,164,0.05);
         }
 
-        /* 新增提醒表单 */
-        .reminder-form {
+        .mode-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .mode-card {
+            padding: 2rem;
+            border: 2px solid rgba(23,97,164,0.1);
+            border-radius: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .mode-card.active {
+            border-color: var(--primary);
+            background: rgba(23,97,164,0.03);
+        }
+
+        /* 主表单 */
+        .form-card {
             background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
+            border-radius: 20px;
+            padding: 3rem;
+            box-shadow: 0 12px 40px rgba(23,97,164,0.08);
+            margin-bottom: 2rem;
         }
 
-        .form-group {
-            margin-bottom: 1.2rem;
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2.5rem;
+            margin: 2rem 0;
         }
 
-        .form-label {
+        /* 输入组 */
+        .input-group {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .input-label {
             display: block;
+            margin-bottom: 1rem;
             color: var(--text);
-            margin-bottom: 0.5rem;
             font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
         }
 
-        .form-input {
+        .input-field {
             width: 100%;
-            padding: 0.8rem;
-            border: 2px solid #e3e9ef;
-            border-radius: 8px;
+            padding: 1.2rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            transition: all 0.3s;
             font-size: 1rem;
         }
 
-        .assist-toggle {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            margin: 1rem 0;
+        .input-field:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(23,97,164,0.1);
         }
 
-        /* 响应式设计 */
-        @media (min-width: 768px) {
-            .form-row {
-                display: grid;
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1rem;
+        /* 剂量单位 */
+        .dose-wrapper {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .unit-select {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            background: white;
+            cursor: pointer;
+            color: var(--text);
+        }
+
+        /* 时间系统 */
+        .time-system {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .preset-times {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .time-option {
+            padding: 1rem 1.5rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .time-option.selected {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        /* 已设置提醒 */
+        .reminders-section {
+            background: white;
+            border-radius: 20px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 24px rgba(23,97,164,0.05);
+        }
+
+        .reminder-card {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            align-items: start;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            background: var(--accent);
+            border-radius: 16px;
+            border-left: 6px solid var(--primary);
+        }
+
+        /* 操作按钮 */
+        .action-bar {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1.5rem;
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 style="color: var(--primary); margin-bottom: 2rem;">
-            <i class="fas fa-bell"></i> 用药提醒设置
-        </h1>
+    <header class="app-header">
+        <div class="branding">
+            <img src="图标.png" class="logo" alt="医心陪诊">
+            <h1>医心智能健康管理平台</h1>
+        </div>
+    </header>
 
-        <!-- 新增提醒表单 -->
-        <div class="reminder-form">
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">药品名称</label>
-                    <input type="text" class="form-input" placeholder="请输入药品全称">
+    <main class="main-container">
+        <!-- 模式选择 -->
+        <div class="mode-selector">
+            <div class="mode-cards">
+                <div class="mode-card active" onclick="toggleMode('self')">
+                    <h3><i class="fas fa-user-edit"></i> 自主设置</h3>
+                    <p>熟悉流程的用户推荐使用</p>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">用药剂量</label>
-                    <input type="text" class="form-input" placeholder="例：1片/次">
-                </div>
-            </div>
-
-            <div class="form-row">
-                <div class="form-group">
-                    <label class="form-label">开始时间</label>
-                    <input type="datetime-local" class="form-input">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">重复频率</label>
-                    <select class="form-input">
-                        <option>每日</option>
-                        <option>每周</option>
-                        <option>自定义</option>
-                    </select>
+                <div class="mode-card" onclick="toggleMode('assist')">
+                    <h3><i class="fas fa-user-nurse"></i> 专业协助</h3>
+                    <p>请求陪诊专员协助设置</p>
                 </div>
             </div>
-
-            <div class="form-group">
-                <label class="form-label">注意事项</label>
-                <textarea class="form-input" rows="3" placeholder="忌口、服用方式等"></textarea>
-            </div>
-
-            <div class="assist-toggle">
-                <input type="checkbox" id="need-assist">
-                <label for="need-assist">需要陪诊员协助设置</label>
-            </div>
-
-            <button style="background: var(--secondary); color: white; width: 100%; padding: 1rem; border: none; border-radius: 8px;">
-                <i class="fas fa-save"></i> 保存提醒
-            </button>
         </div>
 
-        <!-- 历史记录 -->
-        <div style="margin-top: 2rem;">
-            <h3 style="color: var(--primary);">
-                <i class="fas fa-history"></i> 已设置提醒
-            </h3>
-            <div class="medication-card">
-                <div style="display: flex; justify-content: space-between; margin-bottom: 1rem;">
-                    <div>
-                        <h4>阿司匹林肠溶片</h4>
-                        <p style="color: #666;">100mg/次 · 每日08:00</p>
+        <!-- 主表单 -->
+        <div class="form-card">
+            <div class="form-grid">
+                <!-- 左栏 -->
+                <div>
+                    <div class="input-group">
+                        <label class="input-label">
+                            <i class="fas fa-pills"></i>
+                            药品名称
+                        </label>
+                        <input type="text" class="input-field" placeholder="输入药品全称" required>
                     </div>
-                    <div>
-                        <button style="background: none; border: none; color: var(--secondary);">
-                            <i class="fas fa-edit"></i>
-                        </button>
+
+                    <div class="input-group">
+                        <label class="input-label">
+                            <i class="fas fa-syringe"></i>
+                            用药剂量
+                        </label>
+                        <div class="dose-wrapper">
+                            <input type="number" class="input-field"
+                                   placeholder="剂量值" step="0.1" min="0" required>
+                            <select class="unit-select">
+                                <option>片</option>
+                                <option>克</option>
+                                <option>毫升</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <p style="color: #888;">注意事项：餐后服用，避免饮酒</p>
+
+                <!-- 右栏 -->
+                <div>
+                    <div class="input-group">
+                        <label class="input-label">
+                            <i class="fas fa-clock"></i>
+                            提醒时间
+                        </label>
+                        <div class="time-system">
+                            <div class="preset-times">
+                                <div class="time-option selected">08:00</div>
+                                <div class="time-option">12:00</div>
+                                <div class="time-option">18:00</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <label class="input-label">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            注意事项
+                        </label>
+                        <textarea class="input-field" rows="4"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 操作按钮 -->
+            <div class="action-bar">
+                <button class="btn btn-primary">
+                    <i class="fas fa-save"></i> 保存设置
+                </button>
             </div>
         </div>
-    </div>
+
+        <!-- 已设置提醒 -->
+        <div class="reminders-section">
+            <h2><i class="fas fa-bell"></i> 已生效提醒</h2>
+            <div class="reminder-card">
+                <div class="icon">
+                    <i class="fas fa-capsules fa-2x"></i>
+                </div>
+                <div>
+                    <h3>阿司匹林肠溶片</h3>
+                    <p>100mg/片 · 每日2次</p>
+                    <p><i class="fas fa-clock"></i> 08:00, 18:00</p>
+                </div>
+                <div class="actions">
+                    <button class="btn-icon">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // 模式切换
+        function toggleMode(mode) {
+            document.querySelectorAll('.mode-card').forEach(card => {
+                card.classList.remove('active')
+            })
+            event.currentTarget.classList.add('active')
+        }
+
+        // 时间选择
+        document.querySelectorAll('.time-option').forEach(option => {
+            option.addEventListener('click', function() {
+                this.classList.toggle('selected')
+            })
+        })
+    </script>
 </body>
 </html>
