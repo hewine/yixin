@@ -2,129 +2,371 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>医疗知识库 - 医心陪诊</title>
+    <title>医心综合陪诊服务医疗平台</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
-        /* 继承基础样式 */
-        .knowledge-container {
+        :root {
+            --primary: #1761a4;
+            --secondary: #1a73e8;
+            --accent: #e3f2fd;
+            --text: #2d3748;
+            --nav-bg: #003366; /* 深蓝色 */
+            --button-bg: #004a8f; /* 深蓝色按钮 */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', '微软雅黑', sans-serif;
+        }
+
+        body {
+            background: #f8f9fa;
+        }
+
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 2rem;
+            background: var(--nav-bg);
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            width: 50px; /* 设置 logo 大小 */
+            height: auto;
+            margin-right: 1rem;
+        }
+
+        .title {
+            font-size: 1.5rem;
+        }
+
+        .knowledge-system {
             max-width: 1200px;
-            margin: 0 auto;
-            padding: 1rem;
+            margin: 2rem auto;
+            padding: 0 1rem;
         }
 
-        /* 搜索栏 */
-        .search-bar {
-            background: white;
-            padding: 1rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        .search-nav {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
         }
 
-        /* 医院卡片 */
-        .hospital-card {
-            background: white;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
+        .search-box {
+            position: relative;
         }
 
-        .tag {
-            display: inline-block;
+        .search-input {
+            width: 100%;
+            padding: 1.2rem 3rem;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            font-size: 1.1rem;
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+        }
+
+        .search-button {
+            padding: 1.2rem;
+            border: none;
             background: var(--secondary);
             color: white;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            margin: 0.5rem 0.5rem 0 0;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: transform 0.2s, background 0.3s;
         }
 
-        /* 护理知识板块 */
-        .tips-section {
+        .search-button:hover {
+            background: #005bb5; /* 深色变化 */
+            transform: scale(1.05);
+        }
+
+        .knowledge-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .knowledge-card {
+            display: flex;
+            align-items: flex-start;
+            background: white;
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 8px 24px rgba(23,97,164,0.1);
+            transition: all 0.3s;
+        }
+
+        .knowledge-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card-image {
+            width: 100px; /* 设置图片宽度 */
+            height: 100px; /* 设置图片高度 */
+            border-radius: 8px;
+            margin-right: 1.5rem; /* 图片与内容间距 */
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 0.5rem;
+            text-transform: uppercase;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        .hospital-meta {
+            display: flex;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .badge {
+            padding: 0.3rem 0.8rem;
+            background: var(--accent);
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+
+        .forum-section {
+            margin-top: 3rem;
+            background: var(--accent);
+            border-radius: 16px;
+            padding: 2rem;
+        }
+
+        .post-card {
             background: white;
             border-radius: 12px;
             padding: 1.5rem;
-            margin-top: 2rem;
+            margin: 1rem 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
         }
 
-        .accordion {
-            border-bottom: 1px solid #eee;
-            padding: 1rem 0;
+        .learn-more-button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .learn-more-button:hover {
+            background: #003f70; /* 更深的蓝色 */
+            transform: scale(1.05);
+        }
+
+        .learn-more-link {
+            text-decoration: none;
+            color: white;
+        }
+
+        .step-icon {
+            color: var(--primary);
+            font-size: 1.5rem;
+            margin-right: 0.5rem;
+        }
+
+        .btn-like {
+            background: none;
+            border: none;
+            color: var(--primary);
+            cursor: pointer;
+            font-size: 1rem;
+            transition: color 0.3s, transform 0.2s;
+        }
+
+        .btn-like:hover {
+            color: #004080; /* 深色变化 */
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
-    <div class="knowledge-container">
-        <!-- 搜索栏 -->
-        <div class="search-bar">
-            <input type="text" placeholder="搜索医院/疾病/护理知识..."
-                   style="width: 100%; padding: 0.8rem; border: 2px solid #e3e9ef; border-radius: 8px;">
+    <div class="header">
+        <div class="logo">
+            <img src="图标.png" alt="医心 Logo">
+            <div class="title">医心综合陪诊服务医疗平台</div>
+        </div>
+    </div>
+
+    <div class="knowledge-system">
+        <div class="search-nav">
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input type="text" class="search-input" placeholder="搜索医院/疾病/护理技巧...">
+            </div>
+            <button class="search-button">搜索</button>
         </div>
 
-        <!-- 医院导航 -->
-        <h2 style="color: var(--primary); margin-bottom: 1.5rem;">
-            <i class="fas fa-hospital"></i> 北京协和医院就诊指南
-        </h2>
-        <div class="hospital-card">
-            <div style="display: flex; gap: 1rem; margin-bottom: 1rem;">
-                <img src="hospital-thumb.jpg" alt="医院外观"
-                     style="width: 120px; height: 90px; border-radius: 8px; object-fit: cover;">
+        <div class="section-title">医院信息</div>
+        <div class="knowledge-grid">
+            <div class="knowledge-card hospital-info">
+                <img src="北京协和.png" alt="医院" class="card-image">
                 <div>
-                    <h3>特色科室</h3>
-                    <div>
-                        <span class="tag">内分泌科</span>
-                        <span class="tag">心血管科</span>
-                        <span class="tag">肿瘤中心</span>
+                    <h2><i class="fas fa-hospital"></i> 北京协和医院</h2>
+                    <div class="hospital-meta">
+                        <span class="badge">三级甲等</span>
+                        <span class="badge">特色科室</span>
                     </div>
-                </div>
-            </div>
-            <div>
-                <h4>就诊流程</h4>
-                <ol style="color: var(--text); line-height: 2;">
-                    <li>预约挂号（支持APP/电话/现场）</li>
-                    <li>门诊大楼取号（需携带身份证）</li>
-                    <li>候诊区等待叫号</li>
-                </ol>
-            </div>
-        </div>
-
-        <!-- 护理知识 -->
-        <div class="tips-section">
-            <h2 style="color: var(--primary); margin-bottom: 1.5rem;">
-                <i class="fas fa-heartbeat"></i> 糖尿病护理指南
-            </h2>
-            <div class="accordion">
-                <div style="display: flex; justify-content: space-between; cursor: pointer;">
-                    <h4>日常饮食规范</h4>
-                    <i class="fas fa-chevron-down"></i>
-                </div>
-                <div style="display: none; padding-top: 1rem; color: var(--text);">
-                    <p>① 控制碳水化合物摄入量<br>
-                    ② 选择低GI食物（如燕麦、全麦面包）<br>
-                    ③ 每日分5-6餐进食</p>
+                    <div class="info-section">
+                        <h3>就诊流程</h3>
+                        <ol>
+                            <li><span class="step-icon"><i class="fas fa-calendar-alt"></i></span>预约挂号（提前7天开放）</li>
+                            <li><span class="step-icon"><i class="fas fa-ticket-alt"></i></span>门诊大厅取号</li>
+                            <li><span class="step-icon"><i class="fas fa-clock"></i></span>候诊区等待叫号</li>
+                        </ol>
+                    </div>
+                    <div class="warning-section">
+                        <h3><i class="fas fa-exclamation-triangle"></i> 注意事项</h3>
+                        <p>需携带身份证原件，禁止携带宠物</p>
+                    </div>
+                    <a href="hospital-details.html" class="learn-more-link">
+                        <button class="learn-more-button">了解更多</button>
+                    </a>
                 </div>
             </div>
         </div>
 
-        <!-- 讨论区 -->
-        <div style="margin-top: 2rem; background: white; padding: 1.5rem; border-radius: 12px;">
-            <h3 style="color: var(--primary);">
-                <i class="fas fa-comments"></i> 经验交流区
-            </h3>
-            <div style="margin: 1rem 0;">
-                <textarea style="width: 100%; padding: 1rem; border: 2px solid #e3e9ef; border-radius: 8px;"
-                          placeholder="分享您的就医经验或提问..."></textarea>
-                <button style="background: var(--secondary); color: white; margin-top: 0.5rem; padding: 0.8rem 1.5rem; border: none; border-radius: 8px;">
-                    发布
-                </button>
-            </div>
-            <div class="comment">
-                <div style="display: flex; gap: 1rem; margin: 1rem 0;">
-                    <div style="width: 40px; height: 40px; background: #eee; border-radius: 50%;"></div>
-                    <div>
-                        <p style="font-weight: bold;">用户123：</p>
-                        <p>分享一个挂号技巧：早上7点APP放号最多！</p>
+        <div class="section-title">护理指南</div>
+        <div class="knowledge-grid">
+            <div class="knowledge-card">
+                <img src="高血压.png" alt="高血压护理" class="card-image">
+                <div>
+                    <h2><i class="fas fa-heartbeat"></i> 高血压日常护理</h2>
+                    <div class="care-tips">
+                        <ul>
+                            <li><span class="step-icon"><i class="fas fa-list-ul"></i></span>每日定时测量血压</li>
+                            <li><span class="step-icon"><i class="fas fa-apple-alt"></i></span>低盐低脂饮食</li>
+                            <li><span class="step-icon"><i class="fas fa-running"></i></span>保持适度锻炼</li>
+                            <li><span class="step-icon"><i class="fas fa-clock"></i></span>定期复查血压</li>
+                            <li><span class="step-icon"><i class="fas fa-comments"></i></span>与医生保持沟通</li>
+                        </ul>
                     </div>
+                    <a href="hypertension-care.html" class="learn-more-link">
+                        <button class="learn-more-button">了解更多</button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="knowledge-card">
+                <img src="心脏复苏.png" alt="心肺复苏" class="card-image">
+                <div>
+                    <h2><i class="fas fa-first-aid"></i> 心肺复苏指南</h2>
+                    <div class="step-section">
+                        <div class="step">
+                            <span class="step-icon"><i class="fas fa-check-circle"></i></span>
+                            <p>确认环境安全</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-icon"><i class="fas fa-phone"></i></span>
+                            <p>呼叫120并获取AED</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-icon"><i class="fas fa-user-md"></i></span>
+                            <p>开始心肺复苏</p>
+                        </div>
+                    </div>
+                    <a href="cpr-guide.html" class="learn-more-link">
+                        <button class="learn-more-button">了解更多</button>
+                    </a>
+                </div>
+            </div>
+
+            <div class="knowledge-card">
+                <img src="糖尿病.png" alt="糖尿病管理" class="card-image"> 
+                <div>
+                    <h2><i class="fas fa-stethoscope"></i> 糖尿病管理</h2>
+                    <div class="step-section">
+                        <div class="step">
+                            <span class="step-icon"><i class="fas fa-check-circle"></i></span>
+                            <p>定期检测血糖</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-icon"><i class="fas fa-apple-alt"></i></span>
+                            <p>保持健康饮食</p>
+                        </div>
+                        <div class="step">
+                            <span class="step-icon"><i class="fas fa-running"></i></span>
+                            <p>适度锻炼</p>
+                        </div>
+                    </div>
+                    <a href="diabetes-care.html" class="learn-more-link">
+                        <button class="learn-more-button">了解更多</button>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="forum-section">
+            <h2><i class="fas fa-comments"></i> 经验交流区</h2>
+            <div class="post-card">
+                <div class="post-header">
+                    <span class="user">张**</span>
+                    <span class="time">2023-08-15</span>
+                </div>
+                <h3>儿童发热急诊流程建议</h3>
+                <p>建议提前准备退烧药，夜间急诊需带好孩子的病历和必要的个人物品，以便医生更好地进行诊断和治疗。</p>
+                <div class="post-footer">
+                    <button class="btn-like"><i class="fas fa-thumbs-up"></i> 12</button>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-header">
+                    <span class="user">李**</span>
+                    <span class="time">2023-08-16</span>
+                </div>
+                <h3>关于高血压的饮食建议</h3>
+                <p>建议减少盐分摄入，多吃新鲜水果和蔬菜，保持良好的饮食习惯，定期检测血压。</p>
+                <div class="post-footer">
+                    <button class="btn-like"><i class="fas fa-thumbs-up"></i> 8</button>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-header">
+                    <span class="user">王**</span>
+                    <span class="time">2023-08-17</span>
+                </div>
+                <h3>急救知识分享</h3>
+                <p>心肺复苏的关键步骤包括确认环境安全、呼叫急救电话、进行胸外按压和人工呼吸，及时救助至关重要。</p>
+                <div class="post-footer">
+                    <button class="btn-like"><i class="fas fa-thumbs-up"></i> 5</button>
+                </div>
+            </div>
+            <div class="post-card">
+                <div class="post-header">
+                    <span class="user">赵**</span>
+                    <span class="time">2023-08-18</span>
+                </div>
+                <h3>儿童营养搭配建议</h3>
+                <p>建议多吃新鲜蔬菜和水果，减少糖分摄入，保持均衡饮食，有助于儿童的健康成长。</p>
+                <div class="post-footer">
+                    <button class="btn-like"><i class="fas fa-thumbs-up"></i> 10</button>
                 </div>
             </div>
         </div>
