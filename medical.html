@@ -24,7 +24,6 @@
             min-height: 100vh;
         }
 
-        /* 渐变蓝头部 */
         .app-header {
             background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             padding: 1.5rem 2rem;
@@ -45,14 +44,12 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
         }
 
-        /* 主容器 */
         .main-container {
             max-width: 1200px;
             margin: 3rem auto;
             padding: 0 2rem;
         }
 
-        /* 模式选择 */
         .mode-selector {
             background: white;
             border-radius: 20px;
@@ -80,7 +77,6 @@
             background: rgba(23,97,164,0.03);
         }
 
-        /* 主表单 */
         .form-card {
             background: white;
             border-radius: 20px;
@@ -96,7 +92,6 @@
             margin: 2rem 0;
         }
 
-        /* 输入组 */
         .input-group {
             margin-bottom: 2rem;
             position: relative;
@@ -126,7 +121,6 @@
             box-shadow: 0 0 0 4px rgba(23,97,164,0.1);
         }
 
-        /* 剂量单位 */
         .dose-wrapper {
             display: flex;
             gap: 1rem;
@@ -142,7 +136,6 @@
             color: var(--text);
         }
 
-        /* 时间系统 */
         .time-system {
             display: grid;
             gap: 1rem;
@@ -168,7 +161,6 @@
             border-color: var(--primary);
         }
 
-        /* 已设置提醒 */
         .reminders-section {
             background: white;
             border-radius: 20px;
@@ -187,7 +179,6 @@
             border-left: 6px solid var(--primary);
         }
 
-        /* 操作按钮 */
         .action-bar {
             display: flex;
             justify-content: flex-end;
@@ -227,7 +218,6 @@
     </header>
 
     <main class="main-container">
-        <!-- 模式选择 -->
         <div class="mode-selector">
             <div class="mode-cards">
                 <div class="mode-card active" onclick="toggleMode('self')">
@@ -241,10 +231,8 @@
             </div>
         </div>
 
-        <!-- 主表单 -->
         <div class="form-card">
             <div class="form-grid">
-                <!-- 左栏 -->
                 <div>
                     <div class="input-group">
                         <label class="input-label">
@@ -271,7 +259,6 @@
                     </div>
                 </div>
 
-                <!-- 右栏 -->
                 <div>
                     <div class="input-group">
                         <label class="input-label">
@@ -284,6 +271,7 @@
                                 <div class="time-option">12:00</div>
                                 <div class="time-option">18:00</div>
                             </div>
+                            <input type="text" class="input-field" placeholder="自定义时间 (例如: 14:30)">
                         </div>
                     </div>
 
@@ -292,12 +280,11 @@
                             <i class="fas fa-exclamation-triangle"></i>
                             注意事项
                         </label>
-                        <textarea class="input-field" rows="4"></textarea>
+                        <textarea class="input-field" rows="4" placeholder="例如: 饭后服用，不可与牛奶同服"></textarea>
                     </div>
                 </div>
             </div>
 
-            <!-- 操作按钮 -->
             <div class="action-bar">
                 <button class="btn btn-primary">
                     <i class="fas fa-save"></i> 保存设置
@@ -305,7 +292,6 @@
             </div>
         </div>
 
-        <!-- 已设置提醒 -->
         <div class="reminders-section">
             <h2><i class="fas fa-bell"></i> 已生效提醒</h2>
             <div class="reminder-card">
@@ -316,6 +302,7 @@
                     <h3>阿司匹林肠溶片</h3>
                     <p>100mg/片 · 每日2次</p>
                     <p><i class="fas fa-clock"></i> 08:00, 18:00</p>
+                    <p>注意事项: 饭后服用，不可与牛奶同服</p>
                 </div>
                 <div class="actions">
                     <button class="btn-icon">
@@ -327,7 +314,6 @@
     </main>
 
     <script>
-        // 模式切换
         function toggleMode(mode) {
             document.querySelectorAll('.mode-card').forEach(card => {
                 card.classList.remove('active')
@@ -335,7 +321,6 @@
             event.currentTarget.classList.add('active')
         }
 
-        // 时间选择
         document.querySelectorAll('.time-option').forEach(option => {
             option.addEventListener('click', function() {
                 this.classList.toggle('selected')
